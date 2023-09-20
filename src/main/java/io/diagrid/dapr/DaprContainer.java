@@ -27,7 +27,7 @@ public class DaprContainer extends GenericContainer<DaprContainer> {
 
     private final Set<Component> components = new HashSet<>();
 
-    private GenericContainer<?> redis = null;
+    private static GenericContainer<?> redis = null;
 
     public DaprContainer(String dockerImageName, String appName) {
         super(dockerImageName);
