@@ -27,7 +27,7 @@ public class DaprContainer extends GenericContainer<DaprContainer> {
 
     private final Set<Component> components = new HashSet<>();
 
-    private static GenericContainer<?> redis = null;
+    // private static GenericContainer<?> redis = null;
 
     public DaprContainer(String dockerImageName, String appName) {
         super(dockerImageName);
@@ -53,31 +53,31 @@ public class DaprContainer extends GenericContainer<DaprContainer> {
 
     @Override
     protected void doStart() {
-        if (components.stream().noneMatch(it -> "statestore".equals(it.name))) {
-            redis = new GenericContainer<>("redis:6-alpine")
-                    .withCreateContainerCmdModifier(cmd -> {
-                        cmd.getHostConfig().withNetworkMode("container:" + getContainerId());
-                    });
+        // if (components.stream().noneMatch(it -> "statestore".equals(it.name))) {
+        //     redis = new GenericContainer<>("redis:6-alpine")
+        //             .withCreateContainerCmdModifier(cmd -> {
+        //                 cmd.getHostConfig().withNetworkMode("container:" + getContainerId());
+        //             });
 
             //components.add(new Component("statestore", "state.redis", Map.of()));
 
             components.add(new Component("statestore", "state.in-memory", Map.of()));
             //components.add(new Component("pubsub", "pubsub.in-memory", Map.of()));
-        }
+        // }
 
         super.doStart();
 
-        if (redis != null) {
-            redis.start();
-        }
+        // if (redis != null) {
+        //     redis.start();
+        // }
     }
 
     @Override
     public void stop() {
         super.stop();
-        if (redis != null) {
-            redis.stop();
-        }
+        // if (redis != null) {
+        //     redis.stop();
+        // }
     }
 
     @Override
